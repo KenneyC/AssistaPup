@@ -7,7 +7,12 @@ import connection from './utils/connections/database';
 
 dotenv.config();
 
+const PORT = 3000;
+const URL = process.env.HOST_URL; 
+
 const bot = new Telegraf(process.env.BOT_TOKEN);
+bot.telegram.setWebhook(`${URL}/bot${process.env.BOT_TOKEN}`);
+bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, PORT)
 
 const stage = new Stage([askForAgendaScene]);
 
