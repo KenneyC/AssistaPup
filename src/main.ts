@@ -9,7 +9,7 @@ import connection from './utils/connections/database';
 dotenv.config();
 const app = express();
 
-const PORT = 3000;
+const PORT = 8000;
 const URL = process.env.HOST_URL; 
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
