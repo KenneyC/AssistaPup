@@ -43,3 +43,7 @@ bot.launch(); // start
 app.get('/', (req, res) => {
 	res.send('Hello! Please start messaging the bot on telegram :)');
 });
+
+app.listen(PORT, () => {
+	console.log(`Server running on port ${PORT}`);
+});
