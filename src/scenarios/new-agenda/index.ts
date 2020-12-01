@@ -17,6 +17,10 @@ const currentAgendaInformation: AgendaInformation = {
 };
 
 export const generateMinutesTemplate = async (ctx) => {
+	if (currentAgendaInformation.id === "") {
+		ctx.reply('Ruh Roh 😱! Seems like you tried to generate a document without starting an agenda collection, please start one by messaging me "/newagenda"');
+		return;
+	}
 	const agendaItems = (await connection.getAgendaItems(currentAgendaInformation.id) as any).agendaItems;
 	const minutesTemplate: Buffer = await minutesTemplateFactory.createNewAgenda(agendaItems, currentAgendaInformation);
 	await ctx.replyWithDocument({source: Buffer.from(minutesTemplate), filename: `Meeting_Minutes_${currentAgendaInformation.date.toDateString().replace(/\s/g, "_")}.docx`})

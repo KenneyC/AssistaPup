@@ -8,6 +8,7 @@ const subscribeMenu = Extra
   ]))
 
 
-export const subscribeCommand = (ctx: TelegrafContext) => {
-	ctx.reply(`@channel Hey everyone! ${ctx.message.author_signature} is asking for all of you to subscribe to me so that I can send you messages to assist him! If you haven't yet, please press the 🐶 button below and press start!`, subscribeMenu)
+export const subscribeCommand = async (ctx: TelegrafContext) => {
+  const currentChat = await ctx.getChat();
+	ctx.reply(`@channel Hey everyone! ${currentChat.first_name} is asking for all of you to subscribe to me so that I can send you messages to assist him! If you haven't yet, please press the 🐶 button below and press start!`, subscribeMenu)
 }
