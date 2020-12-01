@@ -1,11 +1,13 @@
 import { Telegraf, session, Stage } from 'telegraf';
 import * as dotenv from 'dotenv';
+import express from 'express';
 
 import { newAgendaScene, askForAgendaScene, ASK_FOR_AGENDA_ID, generateMinutesTemplate } from './scenarios/new-agenda';
 import { subscribeCommand } from './scenarios/ask-for-subs';
 import connection from './utils/connections/database';
 
 dotenv.config();
+const app = express();
 
 const PORT = 3000;
 const URL = process.env.HOST_URL; 
@@ -37,3 +39,7 @@ bot.action('start_agenda_collection', (ctx: any) => ctx.scene.enter(ASK_FOR_AGEN
 bot.action('generate_minutes_template', generateMinutesTemplate)
 
 bot.launch(); // start
+
+app.get('/', (req, res) => {
+	res.send('Hello! Please start messaging the bot on telegram :)');
+});
