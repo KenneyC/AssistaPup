@@ -14,7 +14,7 @@ const URL = process.env.HOST_URL;
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.telegram.setWebhook(`${URL}/bot${process.env.BOT_TOKEN}`);
-bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, PORT as number)
+app.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
 
 const stage = new Stage([askForAgendaScene]);
 
