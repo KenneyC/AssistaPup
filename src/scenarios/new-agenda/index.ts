@@ -42,9 +42,10 @@ export const newAgendaScene = async (ctx: TelegrafContext) => {
 
 		await connection.createNewAgenda(currentAgendaInformation.id);
 
-		subscribedChatIds.forEach(({_id, username}: {_id: string, username: string}) => {
+		subscribedChatIds.forEach(({_id}: {_id: number}) => {
+			if (_id === currentChat.id) return;
 			ctx.telegram.sendMessage(_id,
-				`Howdy ${username}! ${currentChat.first_name} is trying to collect agenda items ruff! Do you have any agenda items for the next meeting?'`,
+				`Howdy! ${currentChat.first_name} is trying to collect agenda items ruff! Do you have any agenda items for the next meeting?'`,
 				Markup.inlineKeyboard([
 					Markup.callbackButton('Yep!', 'start_agenda_collection'),
 					Markup.callbackButton('Nope!', 'stop_agenda_collection')
