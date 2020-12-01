@@ -41,6 +41,7 @@ bot.action('generate_minutes_template', generateMinutesTemplate)
 bot.launch(); // start
 
 app.get('/', (req, res) => {
+	console.log(req);
 	res.send('Hello! Please start messaging the bot on telegram :)');
 });
 
