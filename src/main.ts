@@ -26,7 +26,7 @@ bot.start(async (ctx) => {
 		+ 'By starting a conversation with me, you have subscribed to notifications from me! \n\n'
 		+ 'You can type:'
 		+ '\n - /newagenda: I will help you create a new agenda document for your next document! Woofles!'
-		+ '\n - /subscribe: I will subscribe you to messages and questions that will help your team mate with things like agenda items for the next meeting! Ruffles!'
+		+ '\n - /askforsubs (for groups): I will ask the group to subscribe to me by providing a link to chat to me. '
 	)
 });
 bot.use(session());
