@@ -1,5 +1,5 @@
 {
-  "name": "node-typescript-boilerplate",
+  "name": "assista-pup",
   "version": "0.0.0",
   "description": "Minimalistic boilerplate to quick-start Node.js development in TypeScript.",
   "engines": {
@@ -32,6 +32,11 @@
   "author": "Jakub Synowiec <github@jakubsynowiec.info>",
   "license": "Apache-2.0",
   "dependencies": {
+    "@types/mongodb": "^3.5.34",
+    "docx": "^5.4.1",
+    "dotenv": "^8.2.0",
+    "mongodb": "^3.6.3",
+    "telegraf": "^3.38.0",
     "tslib": "~2.0.3"
   },
   "volta": {
