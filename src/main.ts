@@ -22,7 +22,7 @@ bot.start(async (ctx) => {
 	const chat = await ctx.getChat();
 	connection.subscribeUser(chat);
 	ctx.reply(
-		'Hello! My name is AssistaPup and I\'m here to help you with you with your VUUM agendas.'
+		'Hello! My name is AssistaPup and I\'m here to help you with you with your VUUM endeavours. '
 		+ 'By starting a conversation with me, you have subscribed to notifications from me! \n\n'
 		+ 'You can type:'
 		+ '\n - /newagenda: I will help you create a new agenda document for your next document! Woofles!'
@@ -40,8 +40,7 @@ bot.action('generate_minutes_template', generateMinutesTemplate)
 
 bot.launch(); // start
 
-app.get('/', (req, res) => {
-	console.log(req);
+app.get('/', (_req, res) => {
 	res.send('Hello! Please start messaging the bot on telegram :)');
 });
 
