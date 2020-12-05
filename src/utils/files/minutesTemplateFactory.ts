@@ -4,12 +4,12 @@ import { AgendaInformation } from '../../scenarios/new-agenda/types';
 // TODO: Change to template populating
 class MinutesTemplateFactory {
 	
-	createNewAgenda(agendaItems: Record<string, Array<string>>, agendaInfo: AgendaInformation): Promise<Buffer> {
+	createNewMinutesTemplate(agendaItems: AgendaInformation): Promise<Buffer> {
 		const doc = new Document();
 
 		const title: Paragraph[] = [
 			new Paragraph({
-				text: "VUUM Meeting",
+				text: `VUUM ${agendaItems.meetingType} ${agendaItems.meetingType.toLowerCase().includes('meeting') ? "" : "meeting"}`,
 				alignment: AlignmentType.CENTER,
 				heading: HeadingLevel.HEADING_1
 			}),
@@ -19,7 +19,7 @@ class MinutesTemplateFactory {
 				heading: HeadingLevel.HEADING_2
 			}),
 			new Paragraph({
-				text: `${agendaInfo.date.toDateString()}`,
+				text: `${agendaItems.meetingDate}`,
 				alignment: AlignmentType.CENTER,
 			}),
 			new Paragraph({
@@ -34,6 +34,9 @@ class MinutesTemplateFactory {
 		]
 
 		const meetingInformation: Paragraph[] = [
+			new Paragraph({
+				text: "Location: "
+			}),
 			new Paragraph({
 				text: "Attendees: "
 			}),
@@ -68,8 +71,8 @@ class MinutesTemplateFactory {
 			})
 		];
 
-		Object.keys(agendaItems).map((presentor: string) => {
-			const items: Array<string> = agendaItems[presentor];
+		Object.keys(agendaItems.agendaList).map((presentor: string) => {
+			const items: Array<string> = agendaItems.agendaList[presentor];
 			agenda.push(new Paragraph({
 				text: `Presentor : ${presentor.replace("_", " ")}`
 			}));
@@ -81,6 +84,7 @@ class MinutesTemplateFactory {
 					}
 				}))
 			});
+			agenda.push(new Paragraph({text: ""}),new Paragraph({text: "Action Items:"}));
 			agenda.push(new Paragraph({text: ""}),new Paragraph({text: ""}));
 		});
 

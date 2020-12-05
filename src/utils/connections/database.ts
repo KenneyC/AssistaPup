@@ -1,6 +1,7 @@
 import { Db, MongoClient } from 'mongodb';
 import * as dotenv from 'dotenv';
 import { Chat } from 'telegraf/typings/telegram-types';
+import { AgendaInformation } from '../../scenarios/new-agenda/types';
 dotenv.config();
 
 class MongoConnection {
@@ -36,16 +37,49 @@ class MongoConnection {
 		await this.database.collection('subscription').deleteOne({"_id": chatId});
 	}
 
-	async createNewAgenda(agendaId: string): Promise<void> {
-		await this.database.collection('agendas').insertOne({_id: agendaId, agendaItems: {}});
+	async createNewAgenda(agendaInformation: AgendaInformation): Promise<boolean> {
+		const existingAgenda = await this.database.collection('agendas').find(
+			{ active: true },
+			{ sort: { dateTriggered: -1 } },
+		).toArray();
+
+		if (!existingAgenda[0]) {
+			await this.database.collection('agendas').insertOne({
+				_id: agendaInformation.id,
+				dateTriggered: agendaInformation.triggerDate.toISOString(),
+				meetingType: agendaInformation.meetingType,
+				meetingDate: agendaInformation.meetingDate,
+				active: true,
+				organizer: agendaInformation.organizer,
+				agendaList: {}
+			});
+			return true;
+		} else {
+			return false;
+		}
 	}
 
-	async updateNewAgenda(agendaId: string, contributor: string, agendaItems: string[]): Promise<void> {
-		await this.database.collection('agendas').updateOne({_id: agendaId }, {$set: {[`agendaItems.${contributor}`]: agendaItems}});
+	async updateNewAgenda(contributor: string, agendaList: string[]): Promise<void> {
+		await this.database.collection('agendas').findOneAndUpdate(
+			{ active: true },
+			{ $set: {[`agendaList.${contributor}`]: agendaList} },
+			{ sort: { dateTriggered: -1 } },
+		);
 	}
 
-	async getAgendaItems(agendaId: string): Promise<Array<any>> {
-		return this.database.collection('agendas').findOne({_id: agendaId});
+	async getAgendaItems(): Promise<Array<any>> {
+		return await this.database.collection('agendas').find(
+			{ active: true },
+			{ sort: { dateTriggered: -1 } }
+		).limit(1).toArray();
+	}
+
+	async endAgendaCollection(): Promise<void> {
+		await this.database.collection('agendas').findOneAndUpdate(
+			{ active: true },
+			{ $set: { active: false }},
+			{ sort: { dateTriggered: -1 } }
+		)
 	}
 }
 

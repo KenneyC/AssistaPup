@@ -1,6 +1,8 @@
 export interface AgendaInformation {
 	organizer: string,
 	id: string,
-	date: Date,
-	agendas: Record<string, Array<string>>
+	triggerDate: Date,
+	meetingDate: string,
+	agendaList: Record<string, Array<string>>,
+	meetingType: string,
 };
