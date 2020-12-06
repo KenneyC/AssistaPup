@@ -2,9 +2,8 @@ import { Telegraf, session, Stage } from 'telegraf';
 import * as dotenv from 'dotenv';
 import express from 'express';
 
-import { newAgendaMeetingType, newAgendaDate, generateMinutesTemplate, NEW_AGENDA_MEETING_TYPE } from './scenarios/new-agenda';
-import { askForAgendaScene, ASK_FOR_AGENDA_ID, } from './scenarios/ask-for-agenda';
-import { subscribeCommand } from './scenarios/ask-for-subs';
+import { newAgendaMeetingType, newAgendaDate } from './scenarios/new-agenda';
+import { askForAgendaScene } from './scenarios/ask-for-agenda';
 import connection from './utils/connections/database';
 
 dotenv.config();
