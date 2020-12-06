@@ -39,17 +39,17 @@ bot.start(async (ctx) => {
 bot.use(session());
 bot.use(stage.middleware());
 
-bot.command('askforsubs', subscribeCommand );
-bot.command('newagenda', (ctx: any) => {
-	(ctx as any).session.agendaSetUp = {
-		meetingType: "",
-		meetingDate: "",
-	}
-	return ctx.scene.enter(NEW_AGENDA_MEETING_TYPE)
-});
+// bot.command('askforsubs', subscribeCommand );
+// bot.command('newagenda', (ctx: any) => {
+// 	(ctx as any).session.agendaSetUp = {
+// 		meetingType: "",
+// 		meetingDate: "",
+// 	}
+// 	return ctx.scene.enter(NEW_AGENDA_MEETING_TYPE)
+// });
 
-bot.action('start_agenda_collection', (ctx: any) => ctx.scene.enter(ASK_FOR_AGENDA_ID));
-bot.action('generate_minutes_template', generateMinutesTemplate)
+// bot.action('start_agenda_collection', (ctx: any) => ctx.scene.enter(ASK_FOR_AGENDA_ID));
+// bot.action('generate_minutes_template', generateMinutesTemplate)
 
 bot.launch(); // start
 
