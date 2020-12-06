@@ -19,15 +19,24 @@ class MongoConnection {
 		this.instance = this;
 	}
 
+	async checkConnectivity() {
+		while(this.database === undefined) {
+			await new Promise((resolve) => setTimeout(resolve, 5000));
+		}
+	}
+
 	async getUserSubscriptionDetails(firstName: string): Promise<any> {
+		this.checkConnectivity();
 		return await this.database.collection('subscription').findOne({_id: firstName});
 	}
 
 	async getSubscribed(): Promise<Array<any>> {
+		this.checkConnectivity();
 		return await this.database.collection('subscription').find({}).toArray();
 	}
 
 	async subscribeUser(chatInfo: Chat): Promise<void> {
+		this.checkConnectivity();
 		await this.database.collection('subscription').updateOne(
 			{ _id: chatInfo.id },
 			{ $set: { username: chatInfo.username, firstName: chatInfo.first_name}},
@@ -38,10 +47,12 @@ class MongoConnection {
 	}
 
 	async removeSubscription(chatId: string): Promise<void> {
+		this.checkConnectivity();
 		await this.database.collection('subscription').deleteOne({"_id": chatId});
 	}
 
 	async createNewAgenda(agendaInformation: AgendaInformation): Promise<boolean> {
+		this.checkConnectivity();
 		const existingAgenda = await this.database.collection('agendas').find(
 			{ active: true },
 			{ sort: { dateTriggered: -1 } },
@@ -64,6 +75,7 @@ class MongoConnection {
 	}
 
 	async updateNewAgenda(contributor: string, agendaList: string[]): Promise<void> {
+		this.checkConnectivity();
 		await this.database.collection('agendas').findOneAndUpdate(
 			{ active: true },
 			{ $set: {[`agendaList.${contributor}`]: agendaList} },
@@ -72,6 +84,7 @@ class MongoConnection {
 	}
 
 	async getAgendaItems(): Promise<Array<any>> {
+		this.checkConnectivity();
 		return await this.database.collection('agendas').find(
 			{ active: true },
 			{ sort: { dateTriggered: -1 } }
@@ -79,6 +92,7 @@ class MongoConnection {
 	}
 
 	async endAgendaCollection(): Promise<void> {
+		this.checkConnectivity();
 		await this.database.collection('agendas').findOneAndUpdate(
 			{ active: true },
 			{ $set: { active: false }},
