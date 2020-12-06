@@ -19,6 +19,10 @@ class MongoConnection {
 		this.instance = this;
 	}
 
+	async getUserSubscriptionDetails(firstName: string): Promise<any> {
+		return await this.database.collection('subscription').findOne({_id: firstName});
+	}
+
 	async getSubscribed(): Promise<Array<any>> {
 		return await this.database.collection('subscription').find({}).toArray();
 	}

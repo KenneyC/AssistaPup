@@ -7,6 +7,7 @@ import { AgendaInformation } from './types';
 
 export const generateMinutesTemplate = async (ctx) => {
 	const agendaItems = (await connection.getAgendaItems() as any)[0];
+
 	if (!agendaItems) {
 		ctx.reply('Ruh Roh 😱! Seems like you tried to generate a document without starting an agenda collection, please start one by messaging me "/newagenda"');
 		return;

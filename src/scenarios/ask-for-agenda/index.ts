@@ -13,9 +13,13 @@ askForAgendaScene.enter(async (ctx: any) => {
 	if (!currentAgendaItems) {
 		ctx.reply('Uh oh 😱. It seems like you tried to contribute to an agenda collection that has already ended. Please start a new agenda collection by messaging me "/newagenda".');
 	}
-	ctx.session.newAgenda.agendaList[currentChat.id] = {
-		agendaItems: [],
-		lastEnteredItem: ""
+	ctx.session.newAgenda = {
+		agendaList: {
+			[currentChat.id]: {
+				agendaItems: [],
+				lastEnteredItem: ""
+			}
+		}
 	}
 
 	ctx.reply('Pawsome 🐾! Please enter your agenda items, send your items as separate messages one by one!');
